@@ -1,0 +1,5 @@
+how to run java stuff
+
+1. javac [file].java
+	makes a class file
+2. java [file]
