@@ -4,6 +4,7 @@
  * a02363064
  */
 
+import java.lang.Runtime;
  
  public class Assign2 {
      /**
@@ -29,12 +30,14 @@
           * address the first request and then re-process the remaining 
           * arguments.
           */
+          Runtime run = Runtime.getRuntime();
          switch (args[zero]) {
              // check that the first argument is a valid command
              case "-cpu":
                  try {
-                     // report the number of physical and logical CPUs available
-                     findCPUs();
+                     // find and report the number of physical and logical CPUs available
+                     int num = run.availableProcessors();
+                     System.out.println("Processors available\t: " + num);
                  } 
                  catch (NumberFormatException e) {
                      break;
@@ -42,8 +45,14 @@
                  break;
             case "-mem":
                 try {
-                    // report the available free, total, and max memory
-                    findMem();
+                    // find and report the available free, total, and max memory
+                    long free = run.freeMemory();
+                    long total = run.totalMemory();
+                    long max = run.maxMemory();
+
+                    System.out.println("Free Memory available\t: " + free);
+                    System.out.println("Total Memory available\t: " + total);
+                    System.out.println("Max Memory available\t: " + max);
                 } 
                 catch (NumberFormatException e) {
                     break;
@@ -51,17 +60,27 @@
                 break;
             case "-dirs":
                 try {
-                    // report the process working directory and user's home directory
-                    findDirs();
+                    // report the processors working directory and user's home directory
+                    
+                    String work = System.getProperty("user.dir");
+                    String home = System.getProperty("user.home");
+                    
+                    System.out.println("Working Directory\t: " + work);
+                    System.out.println("User Home Directory\t: " + home);
                 } 
                 catch (NumberFormatException e) {
                     break;
                 }
                 break;
-            case "-os":
+                case "-os":
                 try {
                     // report the name and version number of the user's operating system
-                    findOS();
+                    String name = System.getProperty("os.name");
+                    String version = System.getProperty("sun.arch.data.model"); 
+                    
+                    
+                    System.out.println("OS Name\t\t\t: " + name);
+                    System.out.println("OS Version\t\t: " + version);
                 } 
                 catch (NumberFormatException e) {
                     break;
@@ -71,7 +90,17 @@
                 try {
                     // report the java vendor, runtime name, version, 
                     // VM version and VM name
-                    findJavas();
+                    String vendor = System.getProperty("java.vendor");
+                    String version = System.getProperty("java.version");
+                    String runtime = System.getProperty("java.runtime.name");
+                    String vmVersion = System.getProperty("java.vm.version");
+                    String vmName = System.getProperty("java.vm.name");
+                    
+                    System.out.println("Java Vendor\t\t: " + vendor);
+                    System.out.println("Java Runtime\t\t: " + runtime);
+                    System.out.println("Java Version\t\t: " + version);
+                    System.out.println("Java VM Version\t\t: " + vmVersion);
+                    System.out.println("Java VM Name\t\t: " + vmName);
                 } 
                 catch (NumberFormatException e) {
                     break;
@@ -82,72 +111,8 @@
          }
  
          // check for additional arguments
-         if (args.length > 1) {
+         if (args.length > 1 && args.length > zero + 1) {
              checkArgs(args, zero + 1);
          }
         }
-
-        static void findCPUs() {
-            /**
-             * This method finds and prints a report of the number of
-             * physical and logical CPUs available in the user's computer
-             */
-            
-            // cool stuff here
-
-            System.out.println("Processors available: \t" + num);
-        }
-
-        static void findMem() {
-            /**
-             * This method finds and prints a report of the available free, 
-             * total, and max memory in the user's system
-             */
-            
-            // cool stuff here
-
-            System.out.println("Free Memory available: \t" + free);
-            System.out.println("Total Memory available: \t" + total);
-            System.out.println("Max Memory available: \t" + max);
-        }
-
-        static void findDirs() {
-            /**
-             * This method finds and prints a report of the process working
-             * directory and the user's home directory
-             */
-            
-            // cool stuff here
-
-            System.out.println("Working Directory: \t" + work);
-            System.out.println("User Home Directory: \t" + home);
-        }
-
-        static void findOS() {
-            /**
-             * This method finds and prints the user's operating system 
-             * name and version
-             */
-            
-            // cool stuff here
-
-            System.out.println("OS Name: \t" + name);
-            System.out.println("OS Version: \t" + version);
-        }
-
-        static void findJavas() {
-            /**
-             * This method finds and prints a report of the java vendor, 
-             * runtime name, version, VM version and name on the user's
-             * computer
-             */
-            
-            // cool stuff here
-
-            System.out.println("Java Vendor: \t" + vendor);
-            System.out.println("Java Runtime: \t" + runtime);
-            System.out.println("Java Version: \t" + version);
-            System.out.println("Java VM Version: \t" + vmVersion);
-            System.out.println("Java VM Name: \t" + vmName);
-        }
-     }
+    }
